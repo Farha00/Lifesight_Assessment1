@@ -32,12 +32,12 @@ Date Filter: Interactive slider to select a custom date range
 
 Clone the repository:
 
-git clone https://github.com/yourusername/yourrepo.git
+https://github.com/Farha00/Lifesight_Assessment1.git
 
 
 Install dependencies:
 
-pip install streamlit pandas numpy
+pip install requirements.txt
 
 
 Run the dashboard:
