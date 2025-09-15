@@ -1,19 +1,22 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import os
 import datetime
 
 # ---------- LOAD DATA ----------
 @st.cache_data
 def load_data():
-    # Ensure CSVs are loaded relative to the script location
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Raw GitHub URLs (replace with your own)
+    google_url = "https://github.com/Farha00/Lifesight_Assessment1/blob/main/Google.csv"
+    facebook_url = "https://github.com/Farha00/Lifesight_Assessment1/blob/main/Facebook.csv"
+    tiktok_url = "https://github.com/Farha00/Lifesight_Assessment1/blob/main/TikTok.csv"
+    business_url = "https://github.com/Farha00/Lifesight_Assessment1/blob/main/business.csv"
 
-    google = pd.read_csv(os.path.join(BASE_DIR, "google.csv"), parse_dates=["date"], dayfirst=True)
-    facebook = pd.read_csv(os.path.join(BASE_DIR, "facebook.csv"), parse_dates=["date"], dayfirst=True)
-    tiktok = pd.read_csv(os.path.join(BASE_DIR, "tiktok.csv"), parse_dates=["date"], dayfirst=True)
-    business = pd.read_csv(os.path.join(BASE_DIR, "business.csv"), parse_dates=["date"], dayfirst=True)
+    # Load CSVs
+    google = pd.read_csv(google_url, parse_dates=["date"], dayfirst=True)
+    facebook = pd.read_csv(facebook_url, parse_dates=["date"], dayfirst=True)
+    tiktok = pd.read_csv(tiktok_url, parse_dates=["date"], dayfirst=True)
+    business = pd.read_csv(business_url, parse_dates=["date"], dayfirst=True)
 
     # Add channel column
     google["channel"] = "google"
@@ -33,10 +36,11 @@ def load_data():
 
     return marketing, business
 
+# Load data
 marketing, business = load_data()
 
 # ---------- METRICS ----------
-# Handle division by zero safely
+# Safe division to avoid zero errors
 marketing["ctr"] = marketing["clicks"] / marketing["impressions"].replace(0, np.nan)
 marketing["cpc"] = marketing["spend"] / marketing["clicks"].replace(0, np.nan)
 marketing["roas"] = marketing["attributed_revenue"] / marketing["spend"].replace(0, np.nan)
